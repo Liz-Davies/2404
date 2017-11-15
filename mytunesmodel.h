@@ -6,10 +6,8 @@ using namespace std;
 #include "mytunes.h"
 #include "command.h"
 #include "playlist.h"
-#include "songs.h"
-#include "recordings.h"
-#include "tracks.h"
-#include "users.h"
+#include "MyTunesCollection.h"
+#include
 
 /*
 This is the model class.
@@ -26,5 +24,9 @@ class MyTunesModel
     void showThat(Command cmd);
   private:
     UI view;
+    MyTunesCollection<Song*> songs;
+    MyTunesCollection<Track*> tracks;
+    MyTunesCollection<Recording*> recordings;
+    MyTunesCollection<User*> users;
 };
 #endif
