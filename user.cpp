@@ -64,7 +64,6 @@ void User::addPlaylist(Playlist & aPlaylist){
 	if(itr == playlists.end()) {
 		playlists.push_back(&aPlaylist);
 	}
-	std::cout << "Added playlist" << '\n';
 }
 
 void User::removePlaylist(Playlist & aPlaylist){

@@ -2,9 +2,11 @@
 //-u
 delete -u ldnel
 delete -u ldnel
+show users
 add -u ldnel "Louis Nel"
 add -u ldnel "Louis Nel"
 add -u gjones "Glenn Jones"
+show users
 
 //-p
 delete -p "Driving Songs -u ldnel

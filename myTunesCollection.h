@@ -50,7 +50,11 @@ class MyTunesCollection {
             return collection;
         }
         void showOn(UI & view) const{
-            view.printOutput(typeid(T).name());
+            string s;
+            s.append(typeid(T).name());
+            s = s.substr(1);
+            s.append(" List:");
+            view.printOutput(s);
             for(int i=0; i<collection.size(); i++)
                  view.printOutput((*collection[i]).toString());
         }
@@ -65,7 +69,7 @@ class MyTunesCollection {
                view.printOutput(t->toString());
         }
         T* findByUserID(string aUserName){
-            if(strcmp("User", typeid(T).name())==0t) return NULL;
+            if(strcmp("User", typeid(T).name())==0) return NULL;
             for (vector<User*>::iterator it = collection.begin() ; it != collection.end(); ++it)
                 if((*it)->getUserID().compare(aUserName)==0) return *it;
             return NULL;

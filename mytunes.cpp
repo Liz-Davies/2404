@@ -49,7 +49,10 @@ void MyTunes::executeCommand(Command cmd){
 	if(cmd.isCommand(CMD_ADD)) executeCMDADD(cmd);
 	else if(cmd.isCommand(CMD_DELETE)) executeCMDDELETE(cmd);
 	//Do show on model side to minimize view passing
-	else if(cmd.isCommand(CMD_SHOW)) model.executeCMDSHOW(cmd,view);
+	else if(cmd.isCommand(CMD_SHOW)){
+		view.printOutput("EXECUTING: SHOW " + cmd.getCommandString());
+		model.executeCMDSHOW(cmd,view);
+
 }
 
 //CMD ADD COMMANDS
