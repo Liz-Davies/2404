@@ -1,5 +1,5 @@
-using namespace std;
 #include "mytunesmodel.h"
+using namespace std;
 MyTunesModel::MyTunesModel(){}
 // void Myrun();
 MyTunesModel::~MyTunesModel(void){}
