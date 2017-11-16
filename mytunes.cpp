@@ -24,6 +24,7 @@ using namespace std;
 #include "mytunes.h"
 #include "UI.h"
 #include "command.h"
+#include "mytunesmodel.h"
 
 MyTunes::MyTunes():view(this)
 {
@@ -38,6 +39,8 @@ void MyTunes::run()
 	view.run();
 
 }
+
+
 void MyTunes::executeCommand(Command cmd){
 
     //execute application (non UI shell) commands
@@ -45,39 +48,7 @@ void MyTunes::executeCommand(Command cmd){
     //or retrieve contents from the data model
 	if(cmd.isCommand(CMD_ADD)) executeCMDADD(cmd);
 	else if(cmd.isCommand(CMD_DELETE)) executeCMDDELETE(cmd);
-	else if(cmd.isCommand(CMD_SHOW)) executeCMDSHOW(cmd);
-}
-
-//CMD SHOW COMMANDS
-void MyTunes::executeCMDSHOW(Command cmd){
-    //show recordings
-    //show recordings -r recording_id
-    //show songs
-    //show songs -s song_id
-    //show tracks
-    //show tracks -t track_id
-    //show users
-    //show users -u user_id
-
-	enum arguments {SHOW, COLLECTION, FLAG, MEMBER_ID};
-
-	if(cmd.isTokenAt(COLLECTION, "songs") && !cmd.hasToken("-s"))
-		songs.showOn(view);
-	else if(cmd.isTokenAt(COLLECTION, "songs") && cmd.hasToken("-s"))
-		songs.showOn(view, stoi(cmd.getToken("-s")));
-	else if(cmd.isTokenAt(COLLECTION, "recordings") && !cmd.hasToken("-r"))
-		recordings.showOn(view);
-	else if(cmd.isTokenAt(COLLECTION, "recordings") && cmd.hasToken("-r"))
-		recordings.showOn(view, stoi(cmd.getToken("-r")));
-	else if(cmd.isTokenAt(COLLECTION, "tracks") && !cmd.hasToken("-t"))
-		tracks.showOn(view);
-	else if(cmd.isTokenAt(COLLECTION, "tracks") && cmd.hasToken("-t"))
-		tracks.showOn(view, stoi(cmd.getToken("-t")));
-	else if(cmd.isTokenAt(COLLECTION, "users") && !cmd.hasToken("-u"))
-		users.showOn(view);
-	else if(cmd.isTokenAt(COLLECTION, "users") && cmd.hasToken("-u"))
-		users.showOn(view, cmd.getToken("-u"));
-    else view.printOutput("EXECUTING: " + cmd.getCommandString());
+	else if(cmd.isCommand(CMD_SHOW)) model.executeCMDSHOW(cmd,view);
 }
 
 //CMD ADD COMMANDS
@@ -136,7 +107,7 @@ void MyTunes::executeAddSong(Command cmd){
 	  id
 	);
 	if(song == NULL) return;
-	songs.add(*song);
+	model.addSong(song);
 	view.printOutput("EXECUTING: ADD SONG " + cmd.getCommandString());
 }
 
@@ -162,7 +133,7 @@ void MyTunes::executeAddRecording(Command cmd){
 	  id
 	);
 	if(recording == NULL) return;
-	recordings.add(*recording);
+	model.addRecording(recording);
 	view.printOutput("EXECUTING: ADD RECORDING " + cmd.getCommandString());
 }
 void MyTunes::executeAddTrack(Command cmd){
@@ -189,15 +160,15 @@ void MyTunes::executeAddTrack(Command cmd){
 	if(cmd.getToken(RECORDING_ID).compare("null") == 0) recording = NULL;
 	else {
 		if(!cmd.isValidIndex(cmd.getToken(RECORDING_ID))) return;
-		recording = recordings.findByID(stoi(cmd.getToken(RECORDING_ID)));
+		recording = model.getRecordingByID(stoi(cmd.getToken(RECORDING_ID)));
 	}
 
 	int track_number = stoi(cmd.getToken(TRACK_NUMBER));
 	Track* track = new Track(
-	  id, songs.findByID(stoi(cmd.getToken(SONG_ID)))
+	  id, model.getSongByID(stoi(cmd.getToken(SONG_ID)))
 	);
 	if(track == NULL) return;
-	tracks.add(*track);
+	model.addTrack(track);
 	if(recording != NULL) recording->addTrack(*track, track_number);
 	view.printOutput("EXECUTING: ADD TRACK " + cmd.getCommandString());
 }
@@ -213,7 +184,7 @@ void MyTunes::executeAddUser(Command cmd){
 	  );
 
 	if(user == NULL) return;
-	users.add(*user);
+	model.addUser(user);
 	view.printOutput("EXECUTING: ADD USER " + cmd.getCommandString());
 }
 void MyTunes::executeAddPlaylist(Command cmd){
@@ -223,10 +194,12 @@ void MyTunes::executeAddPlaylist(Command cmd){
 
 	enum arguments {ADD, _P, USERID, PLAYLIST_NAME};
 
-	User* user = users.findByUserID(cmd.getToken(USERID));
+	User* user = model.getUserByID(cmd.getToken(USERID));
+	cout<< *user;
 	if(user == NULL) return;
 	Playlist * playlist = new Playlist(cmd.getToken(PLAYLIST_NAME));
 	if(playlist == NULL) return;
+	view.printOutput("Playlist created");
 	user->addPlaylist(*playlist);
 	view.printOutput("EXECUTING: ADD PLAYLIST " + cmd.getCommandString());
 }
@@ -239,11 +212,11 @@ void MyTunes::executeAddPlaylistTrack(Command cmd){
 
 	if(!cmd.isValidIndex(cmd.getToken(TRACK_ID))) return;
 
-	User * user = users.findByUserID(cmd.getToken(USERID));
+	User * user = model.getUserByID(cmd.getToken(USERID));
 	if(user == NULL) return;
 	Playlist * playlist = user->findPlaylist(cmd.getToken(PLAYLIST_NAME));
 	if(playlist == NULL) return;
-	Track * track = tracks.findByID(stoi(cmd.getToken(TRACK_ID)));
+	Track * track = model.getTrackByID(stoi(cmd.getToken(TRACK_ID)));
 	if(track == NULL) return;
 	playlist->addTrack(*track);
 
@@ -277,18 +250,18 @@ void MyTunes::executeDeleteRecording(Command cmd){
 
 	if(!cmd.isValidIndex(cmd.getToken(ID))) return;
 
-	Recording* recording = recordings.findByID(stoi(cmd.getToken(ID)));
+	Recording* recording = model.getRecordingByID(stoi(cmd.getToken(ID)));
 	if(recording == NULL) return;
-	recordings.remove(*recording);
+	model.removeRecording(recording);
 	view.printOutput("EXECUTING: DELETE RECORDING " + cmd.getCommandString());
 }
 void MyTunes::executeDeleteUser(Command cmd){
 	//delete -u ajones
 	enum arguments {DELETE, _U, USER_ID};
 
-	User* user = users.findByUserID(cmd.getToken(USER_ID));
+	User* user = model.getUserByID(cmd.getToken(USER_ID));
 	if(user == NULL) return;
-	users.remove(*user);
+	model.removeUser(user);
 	view.printOutput("EXECUTING: DELETE USER " + cmd.getCommandString());
 }
 void MyTunes::executeDeleteUserPlaylist(Command cmd){
@@ -296,7 +269,7 @@ void MyTunes::executeDeleteUserPlaylist(Command cmd){
 	enum arguments {DELETE, _U, USER_ID, _P, PLAYLIST_NAME};
 	string user_id = cmd.getToken("-u");
 	string playlistName = cmd.getToken("-p");
-	User* user = users.findByUserID(user_id);
+	User* user = model.getUserByID(user_id);
 	if(user == NULL) return;
 	Playlist * playlist = user->findPlaylist(playlistName);
 	if(playlist == NULL) return;
@@ -312,11 +285,11 @@ void MyTunes::executeDeleteUserPlaylistTrack(Command cmd){
 	string trackIDstring = cmd.getToken("-t");
     if(!cmd.isValidIndex(trackIDstring)) return;
     int trackIndex = stoi(trackIDstring);
-	User* user = users.findByUserID(user_id);
+	User* user = model.getUserByID(user_id);
 	if(user == NULL) return;
 	Playlist * playlist = user->findPlaylist(playlistName);
 	if(playlist == NULL) return;
-	Track * track = tracks.findByID(trackIndex);
+	Track * track = model.getTrackByID(trackIndex);
 	if(track == NULL) return;
 	playlist->removeTrack(*track);
 	view.printOutput("EXECUTING: DELETE USER PLAYLIST TRACK " + cmd.getCommandString());
@@ -327,23 +300,11 @@ void MyTunes::executeDeleteTrack(Command cmd){
 	string trackIDstring = cmd.getToken("-t");
     if(!cmd.isValidIndex(trackIDstring)) return;
 	int trackIndex = stoi(trackIDstring);
-	Track * track = tracks.findByID(trackIndex);
+	Track * track = model.getTrackByID(trackIndex);
 	if(track == NULL) return;
 
 	//PERFORM A CASCADED DELETE
-	vector<User*> theUsers = users.getCollection();
-	for(vector<User*>::iterator itr = theUsers.begin(); itr != theUsers.end(); itr++){
-		User* user = *itr;
-		user->removeTrack(*track);
-	}
-	vector<Recording*> theRecordings = recordings.getCollection();
-	for(vector<Recording*>::iterator itr = theRecordings.begin(); itr != theRecordings.end(); itr++){
-		Recording* recording = *itr;
-		recording->removeTrack(*track);
-	}
-
-	tracks.remove(*track);
-
+	model.globalTrackDelete(track);
 }
 
 void MyTunes::executeDeleteSong(Command cmd){
@@ -352,21 +313,8 @@ void MyTunes::executeDeleteSong(Command cmd){
 
 	if(!cmd.isValidIndex(cmd.getToken(ID))) return;
 
-	Song* song = songs.findByID(stoi(cmd.getToken(ID)));
+	Song* song = model.getSongByID(stoi(cmd.getToken(ID)));
 	if(song == NULL) return;
-
-	//Perform Cascaded Delete
-	vector<Track*> theTracks = tracks.getCollection();
-	for(vector<Track*>::iterator itr = theTracks.begin(); itr != theTracks.end(); itr++){
-		Track* track = *itr;
-		Song* trackSong = track->getSong();
-		if(song == trackSong){
-	       //Cascaded GLOBAL Delete
-	       string newCommandString = "delete -t " + to_string(track->getID());
-	       Command c = Command(newCommandString);
-		   executeDeleteTrack(c);
-		}
-	}
-	songs.remove(*song);
+	model.deleteSong(song);
 	view.printOutput("EXECUTING: DELETE SONG " + cmd.getCommandString());
 }

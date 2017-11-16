@@ -4,32 +4,34 @@
 #define _MYTUNESCOL_H
 using namespace std;
 #include "UI.h"
+#include "string.h"
+#include "playlist.h"
+#include "song.h"
+#include "track.h"
+#include "recording.h"
 #include "user.h"
+#include <typeinfo>
 #include <vector>
 
-template<typename T>
-class MyTunesCollection{
-
+template <typename T>
+class MyTunesCollection {
     private:
         vector<T*> collection;
-        vector<T*>::iterator findPosition(T & t){
-            for (vector<T*>::iterator it = collection.begin() ; it != collection.end(); ++it)
+        typename vector<T*>::iterator findPosition(T & t){
+            for (typename vector<T*>::iterator it = collection.begin() ; it != collection.end(); ++it)
                 if(*it == &t) return it;
             return collection.end();
         }
     public:
-        MyTunesCollection();
-        ~MyTunesCollection(void);
-        //needs to reconcile? IDK
-        T findByID(int id){
-            for (vector<T*>::iterator it = collection.begin() ; it != collection.end(); ++it)
-        		if((*it)->getID() == anID) return *it;
-        	return NULL;
+        MyTunesCollection(){}
+        ~MyTunesCollection(void){
+            for(int i=0; i<collection.size(); i++)
+        		delete collection[i];
         }
-        T findByUserID(string aUserName){
-            if(typeid(T).name() != "User") return NULL;
-            for (vector<T*>::iterator it = collection.begin() ; it != collection.end(); ++it)
-        		if((*it)->getUserID().compare(aUserName)==0) return *it;
+        //needs to reconcile? IDK
+        T * findByID(int id){
+            for (typename vector<T*>::iterator it = collection.begin() ; it != collection.end(); ++it)
+        		if((*it)->getID() == id) return *it;
         	return NULL;
         }
         //
@@ -37,32 +39,37 @@ class MyTunesCollection{
             collection.push_back(&t);
         }
         void remove(T & t){
-            vector<T*>::iterator index = findPosition(t);
+            typename vector<T*>::iterator index = findPosition(t);
         	if(index != collection.end()) {
         		T * at = *index;
         		collection.erase(index);
         		delete at; //free the memory
+            }
         }
-        void showOn(UI & aView) const{
-            view.printOutput(this.value_type+":");
+        vector<T*> & getCollection(){
+            return collection;
+        }
+        void showOn(UI & view) const{
+            view.printOutput(typeid(T).name());
             for(int i=0; i<collection.size(); i++)
                  view.printOutput((*collection[i]).toString());
         }
         void showOn(UI & view, int memberID)  {
-          view.printOutput(this.value_type+":");
           T * t = findByID(memberID);
           if( t != NULL)
                view.printOutput(t->toString());
         }
         void showOn(UI & view, string memberID)  {
-          view.printOutput(this.value_type+":");
-          T* t = findByID(memberID);
+          T* t = findByUserID(memberID);
           if( t != NULL)
                view.printOutput(t->toString());
         }
-
-
+        T* findByUserID(string aUserName){
+            if("User" != typeid(T).name()) return NULL;
+            for (vector<User*>::iterator it = collection.begin() ; it != collection.end(); ++it)
+                if((*it)->getUserID().compare(aUserName)==0) return *it;
+            return NULL;
+        }
 
 };
-ostream & operator<<(ostream & out, const MyTunesCollection & myTunesCol);
 #endif
