@@ -5,7 +5,7 @@ using namespace std;
 #include "UI.h"
 #include "command.h"
 #include "playlist.h"
-#include "MyTunesCollection.h"
+#include "myTunesCollection.h"
 #include "song.h"
 #include "track.h"
 #include "recording.h"
