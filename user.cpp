@@ -40,7 +40,7 @@ User::~User(){
 		delete playlists[i]; //delete playlists this user owns
 
 }
-int User::getID(){return id;}
+//int User::getID(){return id;}
 
 string User::getUserID(){return userid;}
 

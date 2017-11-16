@@ -20,21 +20,22 @@
 
 #include <ostream>
 #include <string>
+#include "manager.h"
 
-class Song {
+class Song : public Manager{
 	/*
 	Song represents a musical composition (not an audio recording)
 	*/
 	public:
 	Song(const string & aTitle, const string & aComposer, const int anId = -1);
 	~Song(void);
-    int getID()const;
+    //int getID()const;
 	string getTitle()const;
     string toString() const;
 	private:
 	string title;
 	string composer;
-	int id;
+	//int id;
 	Song(const Song & aSong); //hide copy constructor in private section
 };
 

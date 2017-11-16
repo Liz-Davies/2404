@@ -33,7 +33,7 @@ Playlist::Playlist(const Playlist & aPlaylist){
 Playlist::~Playlist(){
 	cout << "~Playlist(void)" << endl;
 }
-int Playlist::getID(){return -1;}
+//int Playlist::getID(){return -1;}
 string Playlist::getName(){return name;}
 
 vector<Track*> & Playlist::getTracks(){return tracks;}

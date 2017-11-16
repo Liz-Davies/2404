@@ -34,7 +34,7 @@ Track::Track(const Track & aTrack){
 Track::~Track(){
 	cout << "~Track(void)" << endl;
 }
-int Track::getID(){return id;}
+//int Track::getID(){return id;}
 Song * Track::getSong(){return song;}
 string Track::getMp3FileName(){return mp3FileName;}
 

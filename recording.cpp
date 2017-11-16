@@ -41,7 +41,7 @@ Recording::Recording(const Recording & aRecording){
 Recording::~Recording(){
 	cout << "~Recording(void)" << endl;
 }
-int Recording::getID(){return id;}
+//int Recording::getID(){return id;}
 vector<Track*> & Recording::getTracks(){return tracks;}
 
 vector<Track*>::iterator Recording::findPosition(Track & aTrack){

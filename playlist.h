@@ -23,16 +23,17 @@
 #include <vector>
 
 #include "track.h"
+#include "manager.h"
 
 
-class Playlist {
+class Playlist : public Manager{
 	/*
 	Playlist represents an user playlist of tracks.
 	*/
 	public:
 	Playlist(const string & aPlaylistName);
 	~Playlist(void);
-    int getID();
+    //int getID();
 	string getName();
 	void removeTrack(Track & aTrack);
 	void addTrack(Track & aTrack);

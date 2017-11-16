@@ -24,8 +24,9 @@
 //#include "MyTunesCollection.h"
 
 #include "playlist.h"
+#include "manager.h"
 
-class User {
+class User : public Manager {
 	/*
 	User represents an application user.
 	*/
@@ -33,7 +34,7 @@ class User {
 	User(const string & aUserID,
 	          const string & aName);
 	~User(void);
-    int getID();
+    //int getID();
     string getUserID();
 	Playlist * findPlaylist(const string & aPlaylistName);
 	void removePlaylist(Playlist & aPlayList);
@@ -43,7 +44,7 @@ class User {
 
 	private:
 	static int nextUserNumericID;
-	int id; //numeric id for uniformity with other model classes
+	//int id; //numeric id for uniformity with other model classes
 	string userid;
 	string name;
 	vector<Playlist*> playlists;
