@@ -65,7 +65,7 @@ class MyTunesCollection {
                view.printOutput(t->toString());
         }
         T* findByUserID(string aUserName){
-            if(strcmp("User", typeid(T).name())==0) return NULL;
+            if(strcmp("User", typeid(T).name())==0t) return NULL;
             for (vector<User*>::iterator it = collection.begin() ; it != collection.end(); ++it)
                 if((*it)->getUserID().compare(aUserName)==0) return *it;
             return NULL;

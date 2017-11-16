@@ -12,7 +12,7 @@ add -u ajones "Anne Jones"
 //add playlists
 add -p ldnel "Driving Songs"
 //add playlist tracks
-add -l ldnel "Driving Songs" 1001 
+add -l ldnel "Driving Songs" 1001
 
 //Test delete Commands
 delete -s 1001 -p "Driving Songs" -u ldnel
@@ -20,13 +20,13 @@ delete -Global -s 1001 -p "Driving Songs" -u ldnel
 delete -r 103
 delete -p "Driving Songs -u ldnel
 delete -u ldnel
-delete -t 100 1001 
+delete -t 100 1001
 
 //Test show Commands
 show songs
 show users
-show playlists -u user_id
-show songs -u user_id -p playlist_name
+show playlists -u cindy
+show songs -u cindy -p mysongs
 show recordings
 show tracks
 

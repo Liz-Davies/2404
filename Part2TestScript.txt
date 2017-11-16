@@ -1,0 +1,31 @@
+//Testing Commands that make have been affected
+//-u
+delete -u ldnel
+delete -u ldnel
+add -u ldnel "Louis Nel"
+add -u ldnel "Louis Nel"
+add -u gjones "Glenn Jones"
+
+//-p
+delete -p "Driving Songs -u ldnel
+add -p ldnel "Driving Songs"
+add -p ldnel "Driving Songs"
+show playlists -u ldnel
+delete -p "Driving Songs -u ldnel
+show playlists -u ldnel
+add -p ldnel "Driving Songs"
+add -p gjones "Driving Songs"
+show playlists -u gjones
+
+//add playlist tracks
+add -l ldnel "Driving Songs" 1001
+//add nonexistent track to test searching
+add -l ldnel "Driving Songs" 1
+//add duplicate track to test comparison
+add -l ldnel "Driving Songs" 1001
+//show playlist
+show songs -u ldnel -p "Driving Songs"
+delete -Global -s 1001 -p "Driving Songs" -u ldnel
+show songs -u ldnel -p "Driving Songs"
+delete -p "Driving Songs -u ldnel
+show songs -u ldnel -p "Driving Songs"
