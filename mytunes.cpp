@@ -52,6 +52,7 @@ void MyTunes::executeCommand(Command cmd){
 	else if(cmd.isCommand(CMD_SHOW)){
 		view.printOutput("EXECUTING: SHOW " + cmd.getCommandString());
 		model.executeCMDSHOW(cmd,view);
+	}
 
 }
 
