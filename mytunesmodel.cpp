@@ -84,10 +84,16 @@ void MyTunesModel::executeCMDSHOW(Command cmd,UI & view){
 
 	enum arguments {SHOW, COLLECTION, FLAG, MEMBER_ID};
 
-	if(cmd.isTokenAt(COLLECTION, "songs") && !cmd.hasToken("-s"))
-		songs.showOn(view);
-	else if(cmd.isTokenAt(COLLECTION, "songs") && cmd.hasToken("-s"))
+
+	if(cmd.isTokenAt(COLLECTION, "songs") && cmd.hasToken("-s"))
 		songs.showOn(view, stoi(cmd.getToken("-s")));
+	else if(cmd.isTokenAt(COLLECTION, "songs") && cmd.hasToken("-u")){
+		User * user = getUserByID(cmd.getToken("-u"));
+		if(user == NULL)view.printOutput("Error: User not found");
+		else user->showOn(view,cmd.getToken("-p"));
+	}
+	else if(cmd.isTokenAt(COLLECTION, "songs"))
+		songs.showOn(view);
 	else if(cmd.isTokenAt(COLLECTION, "recordings") && !cmd.hasToken("-r"))
 		recordings.showOn(view);
 	else if(cmd.isTokenAt(COLLECTION, "recordings") && cmd.hasToken("-r"))

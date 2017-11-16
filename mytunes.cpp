@@ -49,10 +49,7 @@ void MyTunes::executeCommand(Command cmd){
 	if(cmd.isCommand(CMD_ADD)) executeCMDADD(cmd);
 	else if(cmd.isCommand(CMD_DELETE)) executeCMDDELETE(cmd);
 	//Do show on model side to minimize view passing
-	else if(cmd.isCommand(CMD_SHOW)){
-		view.printOutput("EXECUTING: SHOW " + cmd.getCommandString());
-		model.executeCMDSHOW(cmd,view);
-	}
+	else if(cmd.isCommand(CMD_SHOW))model.executeCMDSHOW(cmd,view);
 
 }
 
@@ -218,13 +215,10 @@ void MyTunes::executeAddPlaylistTrack(Command cmd){
 
 	User * user = model.getUserByID(cmd.getToken(USERID));
 	if(user == NULL) return;
-	std::cout << "Success: Found user" << '\n';
 	Playlist * playlist = user->findPlaylist(cmd.getToken(PLAYLIST_NAME));
 	if(playlist == NULL) return;
-	std::cout << "Success: Found playlist" << '\n';
 	Track * track = model.getTrackByID(stoi(cmd.getToken(TRACK_ID)));
 	if(track == NULL) return;
-	std::cout << "Success: Found track" << '\n';
 	playlist->addTrack(*track);
 
 }

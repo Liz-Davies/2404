@@ -36,7 +36,7 @@ class MyTunesCollection {
         }
         //
         void add(T & t){
-            collection.push_back(&t);
+            if(findPosition(t)==collection.end())collection.push_back(&t);
         }
         void remove(T & t){
             typename vector<T*>::iterator index = findPosition(t);

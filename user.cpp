@@ -20,6 +20,7 @@
 using namespace std;
 
 #include "user.h"
+#include "UI.h"
 
 int User::nextUserNumericID = 1000;
 
@@ -94,6 +95,12 @@ string User::toString()const {
 	}
 
 	return s;
+}
+
+void User::showOn(UI & view,const string & aPlaylistName )  {
+	Playlist * p = findPlaylist(aPlaylistName);
+	if(p==NULL) {view.printOutput("No such playlist found");}
+	else {view.printOutput(p->toString());}
 }
 
 ostream & operator<<(ostream & out, const User & aUser){

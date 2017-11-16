@@ -22,10 +22,9 @@
 #include <string>
 #include <vector>
 //#include "MyTunesCollection.h"
-
 #include "playlist.h"
 #include "manager.h"
-
+class UI;
 class User : public Manager {
 	/*
 	User represents an application user.
@@ -41,6 +40,7 @@ class User : public Manager {
 	void addPlaylist(Playlist & aPlayList);
 	void removeTrack(Track & aTrack);
     string toString() const;
+	void showOn(UI & view,const string & aPlaylistName);
 
 	private:
 	static int nextUserNumericID;

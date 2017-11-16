@@ -9,11 +9,11 @@ add -u gjones "Glenn Jones"
 show users
 
 //-p
-delete -p "Driving Songs -u ldnel
+delete -u ldnel -p "Driving Songs
 add -p ldnel "Driving Songs"
 add -p ldnel "Driving Songs"
 show playlists -u ldnel
-delete -p "Driving Songs -u ldnel
+delete -u ldnel -p "Driving Songs
 show playlists -u ldnel
 add -p ldnel "Driving Songs"
 add -p gjones "Driving Songs"
@@ -29,5 +29,13 @@ add -l ldnel "Driving Songs" 1001
 show songs -u ldnel -p "Driving Songs"
 delete -Global -s 1001 -p "Driving Songs" -u ldnel
 show songs -u ldnel -p "Driving Songs"
-delete -p "Driving Songs -u ldnel
+delete -u ldnel -p "Driving Songs"
+show songs -u ldnel -p "Driving Songs"
+delete -u ldnel
+show songs -u ldnel -p "Driving Songs"
+delete -u ldnel
+show songs -u ldnel -p "Driving Songs"
+delete -u ldnel
+show songs -u ldnel -p "Driving Songs"
+delete -u ldnel
 show songs -u ldnel -p "Driving Songs"
