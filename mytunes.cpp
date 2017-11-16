@@ -195,7 +195,6 @@ void MyTunes::executeAddPlaylist(Command cmd){
 	enum arguments {ADD, _P, USERID, PLAYLIST_NAME};
 
 	User* user = model.getUserByID(cmd.getToken(USERID));
-	cout<< *user;
 	if(user == NULL) return;
 	Playlist * playlist = new Playlist(cmd.getToken(PLAYLIST_NAME));
 	if(playlist == NULL) return;
@@ -214,10 +213,13 @@ void MyTunes::executeAddPlaylistTrack(Command cmd){
 
 	User * user = model.getUserByID(cmd.getToken(USERID));
 	if(user == NULL) return;
+	std::cout << "Success: Found user" << '\n';
 	Playlist * playlist = user->findPlaylist(cmd.getToken(PLAYLIST_NAME));
 	if(playlist == NULL) return;
+	std::cout << "Success: Found playlist" << '\n';
 	Track * track = model.getTrackByID(stoi(cmd.getToken(TRACK_ID)));
 	if(track == NULL) return;
+	std::cout << "Success: Found track" << '\n';
 	playlist->addTrack(*track);
 
 }

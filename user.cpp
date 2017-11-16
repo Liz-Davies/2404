@@ -45,13 +45,16 @@ int User::getID(){return id;}
 string User::getUserID(){return userid;}
 
 vector<Playlist*>::iterator User::findPosition(Playlist & aPlaylist){
-	for (vector<Playlist*>::iterator itr = playlists.begin() ; itr != playlists.end(); ++itr)
+	int n=0;
+	for (vector<Playlist*>::iterator itr = playlists.begin(); itr < playlists.end(); itr++){
 		if(*itr == &aPlaylist) return itr;
+		std::cout << n++ << '\n';
+	}
 	return playlists.end();
 }
 
 Playlist* User::findPlaylist(const string & aPlaylistName){
-	for (vector<Playlist*>::iterator itr = playlists.begin() ; itr != playlists.end(); ++itr)
+	for (vector<Playlist*>::iterator itr = playlists.begin() ; itr < playlists.end(); ++itr)
 		if(((*itr)->getName()).compare(aPlaylistName) == 0) return *itr;
 	return NULL;
 }
@@ -61,6 +64,7 @@ void User::addPlaylist(Playlist & aPlaylist){
 	if(itr == playlists.end()) {
 		playlists.push_back(&aPlaylist);
 	}
+	std::cout << "Added playlist" << '\n';
 }
 
 void User::removePlaylist(Playlist & aPlaylist){

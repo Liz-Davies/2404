@@ -21,6 +21,7 @@
 #include <ostream>
 #include <string>
 #include <vector>
+//#include "MyTunesCollection.h"
 
 #include "playlist.h"
 
@@ -46,6 +47,7 @@ class User {
 	string userid;
 	string name;
 	vector<Playlist*> playlists;
+	// MyTunesCollection<Playlist> playlists;
 	vector<Playlist*>::iterator findPosition(Playlist & aPlaylist);
 	User(const User & aUser); //hide copy constructor in private section
 };

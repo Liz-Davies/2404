@@ -39,7 +39,8 @@ string Playlist::getName(){return name;}
 vector<Track*> & Playlist::getTracks(){return tracks;}
 
 vector<Track*>::iterator Playlist::findPosition(Track & aTrack){
-	for (vector<Track*>::iterator itr = tracks.begin() ; itr != tracks.end(); ++itr)
+	std::cout << "Finding Position" << '\n';
+	for (vector<Track*>::iterator itr = tracks.begin() ; itr < tracks.end(); ++itr)
 		if(*itr == &aTrack) return itr;
 	return tracks.end();
 }
