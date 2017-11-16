@@ -18,16 +18,16 @@ void MyTunesModel::addTrack(Track * x){
 }
 
 Recording * MyTunesModel::getRecordingByID(int ID){
-	recordings.findByID(ID);
+	return recordings.findByID(ID);
 }
 User * MyTunesModel::getUserByID(string aUserName){
-	users.findByUserID(aUserName);
+	return users.findByUserID(aUserName);
 }
 Song * MyTunesModel::getSongByID(int ID){
-	songs.findByID(ID);
+	return songs.findByID(ID);
 }
 Track * MyTunesModel::getTrackByID(int ID){
-	tracks.findByID(ID);
+	return tracks.findByID(ID);
 }
 
 void MyTunesModel::removeRecording(Recording * x){
