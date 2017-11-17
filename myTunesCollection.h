@@ -52,7 +52,8 @@ class MyTunesCollection {
         }
         //
         void add(T & t){
-            if(findByID(t.getID())!=NULL);
+            if(findByID(t.getID())!=NULL)
+            ;
             collection.push_back(&t);
         }
         void remove(T & t){
