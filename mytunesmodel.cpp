@@ -21,7 +21,7 @@ Recording * MyTunesModel::getRecordingByID(int ID){
 	return recordings.findByID(ID);
 }
 User * MyTunesModel::getUserByID(string aUserName){
-	return users.findByUserID(aUserName);
+	return users.findUserByID(aUserName);
 }
 Song * MyTunesModel::getSongByID(int ID){
 	return songs.findByID(ID);

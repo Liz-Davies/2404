@@ -18,7 +18,7 @@ class MyTunesCollection {
     private:
         vector<T*> collection;
         typename vector<T*>::iterator findPosition(T & t){
-            for (typename vector<T*>::iterator it = collection.begin() ; it != collection.end(); ++it)
+            for (typename vector<T*>::iterator it = collection.begin() ; it < collection.end(); ++it)
                 if(*it == &t) return it;
             return collection.end();
         }
@@ -30,13 +30,14 @@ class MyTunesCollection {
         }
         //needs to reconcile? IDK
         T * findByID(int id){
-            for (typename vector<T*>::iterator it = collection.begin() ; it != collection.end(); ++it)
+            for (typename vector<T*>::iterator it = collection.begin() ; it < collection.end(); ++it)
         		if((*it)->getID() == id) return *it;
         	return NULL;
         }
         //
         void add(T & t){
-            if(findPosition(t)==collection.end())collection.push_back(&t);
+            if(findByID(t.getID())!=NULL);
+            collection.push_back(&t);
         }
         void remove(T & t){
             typename vector<T*>::iterator index = findPosition(t);
@@ -58,22 +59,23 @@ class MyTunesCollection {
             for(int i=0; i<collection.size(); i++)
                  view.printOutput((*collection[i]).toString());
         }
-        void showOn(UI & view, int memberID)  {
+        void showOn(UI & view, int memberID) {
           T * t = findByID(memberID);
           if( t != NULL)
                view.printOutput(t->toString());
         }
         void showOn(UI & view, string memberID)  {
-          T* t = findByUserID(memberID);
+          T* t = findUserByID(memberID);
           if( t != NULL)
                view.printOutput(t->toString());
         }
-        T* findByUserID(string aUserName){
-            if(strcmp("User", typeid(T).name())==0) return NULL;
-            for (vector<User*>::iterator it = collection.begin() ; it != collection.end(); ++it)
+        User * findUserByID(string aUserName){
+            if(typeid(User)!=typeid(T)) return NULL;
+            for (typename vector<T*>::iterator it = collection.begin() ; it <collection.end(); ++it)
                 if((*it)->getUserID().compare(aUserName)==0) return *it;
             return NULL;
-        }
 
+        }
 };
+
 #endif

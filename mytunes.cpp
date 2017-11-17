@@ -125,8 +125,8 @@ void MyTunes::executeAddRecording(Command cmd){
 	int id = -1;
 	if(cmd.isTokenAt(ID,"?")) id = nextAvailableRecordingID++;
     else id = stoi(cmd.getToken(ID));
-	if(nextAvailableRecordingID <= id) nextAvailableRecordingID = id + 1;
 
+	if(nextAvailableRecordingID <= id) nextAvailableRecordingID = id + 1;
 	Recording* recording = new Recording(
 	  cmd.getToken(TITLE),
 	  cmd.getToken(ARTIST),
@@ -156,8 +156,8 @@ void MyTunes::executeAddTrack(Command cmd){
 	if(cmd.isTokenAt(ID,"?")) id = nextAvailableTrackID++;
     else id = stoi(cmd.getToken(ID));
 	if(nextAvailableTrackID <= id) nextAvailableTrackID = id + 1;
-
 	Recording * recording;
+
 	//tracks don't have to be associated with recordings
 	if(cmd.getToken(RECORDING_ID).compare("null") == 0) recording = NULL;
 	else {
@@ -179,7 +179,7 @@ void MyTunes::executeAddUser(Command cmd){
     //add -u user_id name
     //add -u ajones "Anne Jones"
 	enum arguments {ADD, _U, USERID, NAME};
-
+	if(model.getUserByID(cmd.getToken(USERID))!=NULL) return;
 	User* user = new User(
 	  cmd.getToken(USERID),
 	  cmd.getToken(NAME)
@@ -198,9 +198,9 @@ void MyTunes::executeAddPlaylist(Command cmd){
 
 	User* user = model.getUserByID(cmd.getToken(USERID));
 	if(user == NULL) return;
+	if(user->findPlaylist(cmd.getToken(PLAYLIST_NAME))!=NULL) return;
 	Playlist * playlist = new Playlist(cmd.getToken(PLAYLIST_NAME));
 	if(playlist == NULL) return;
-	view.printOutput("Playlist created");
 	user->addPlaylist(*playlist);
 	view.printOutput("EXECUTING: ADD PLAYLIST " + cmd.getCommandString());
 }
