@@ -32,6 +32,7 @@ some developer commands not intended for production
 const string CMD_ADD = "add"; //add items to collections
 const string CMD_DELETE = "delete"; //delete items from collections
 const string CMD_SHOW = "show"; //display collections
+const string CMD_FOLLOW = "follow";
 
 //UI shell only commands
 const string UICMD_LOG = ".log"; //log comands and output
@@ -56,8 +57,9 @@ const string AppCommands[] = {
 	CMD_ADD,
 	CMD_DELETE,
 	CMD_SHOW,
+	CMD_FOLLOW
 	};
-const int NumberOfAppCommands = 3;
+const int NumberOfAppCommands = 4;
 
 const string DevCommands[] = {
 	DEV_trim,

@@ -9,7 +9,7 @@ class Observer {
 
   int operator==(const Observer & obs) const {
     return this == & obs;
-  } 
+  }
 };
 
 ostream & operator<<(ostream & out, const Observer & obs) {

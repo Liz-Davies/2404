@@ -50,6 +50,7 @@ void MyTunes::executeCommand(Command cmd){
 	else if(cmd.isCommand(CMD_DELETE)) executeCMDDELETE(cmd);
 	//Do show on model side to minimize view passing
 	else if(cmd.isCommand(CMD_SHOW))model.executeCMDSHOW(cmd,view);
+	else if(cmd.isCommand(CMD_FOLLOW)) executeCMDFOLLOW(cmd);
 
 }
 
@@ -318,4 +319,39 @@ void MyTunes::executeDeleteSong(Command cmd){
 	if(song == NULL) return;
 	model.deleteSong(song);
 	view.printOutput("EXECUTING: DELETE SONG " + cmd.getCommandString());
+}
+
+void MYTunes::executeCMDFOLLOW(Command cmd){
+	//follow -u userid -p playlist_name -f userid2
+	//follow -u userid -p -playlist_name -f stop
+	// -f indicates the user that will be followed
+	// -u indicates the user that will DO the following
+	if(!cmd.isValidIndex(cmd.getToken("-u"))) return;
+	User * userFollower = model.getUserByID(cmd.getToken("-u");
+	if(user == NULL) return;
+
+	if(!cmd.isValidIndex(cmd.getToken("-f"))) return;
+	if(toLowerCase(cmd.getToken("-f")) == "stop") {
+		Playlist * plObserver = userObserver->findPlaylist(cmd.getToken("-p"));
+		if(plObserver == NULL) return;
+		//TODO: Do we want to have a subject pointer in it? It would make our lives easier? It could be our test for whether certain actions are allowed
+	}else{
+		User * userSubject = model.getUserByID(cmd.getToken("-f"));
+		if(userSubject == NULL) return;
+
+		if(!cmd.isValidIndex(cmd.getToken("-p"))) return;
+		Playlist * plSubject = userSubject->findPlaylist(cmd.getToken("-p");
+		if(plSubject == NULL) return;
+
+		Playlist * plObserver = userObserver->findPlaylist(cmd.getToken("-p"));
+		if(plObserver == NULL){
+			plObserver = new Playlist(cmd.getToken("-p"));
+			if(plObserver == NULL) return;
+			userObserver->addPlaylist(*plObserver);
+			view.printOutput("CREATING AN OBSERVER PLAYLIST " + cmd.getCommandString());
+		}//else if(plObserver.isObserver()) return;
+		//TODO: Rectify this. What do we do if the observer is already observing something?
+		pl.attach(p2);
+	}
+	view.printOutput("EXECUTING: FOLLOW "+cmd.getCommandString());
 }

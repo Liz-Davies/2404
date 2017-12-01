@@ -58,7 +58,7 @@ string Command::getToken(string s){
 	   string emptyToken = "";
 	   if(!hasToken(s)) return emptyToken;
 	   int tokenIndex = indexOfToken(s);
-	   if(tokenIndex < tokens.size()-1) return tokens[tokenIndex + 1];
+	   if(tokenIndex < tokens.size()-1  && tokenIndex>=0) return tokens[tokenIndex + 1];
        return emptyToken;
 }
 bool Command::isCommand(string aCommandName){
