@@ -1,3 +1,5 @@
+#include "arraylist.h"
+#include "observer.h"
 class Subject {
 //    =======
  ArrayList<Observer> observers;

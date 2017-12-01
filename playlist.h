@@ -24,7 +24,8 @@
 
 #include "track.h"
 #include "manager.h"
-
+#include "subject.h"
+#include "observer.h"
 
 
 class Playlist : public Manager, public Subject, public Observer{
