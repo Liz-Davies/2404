@@ -1,5 +1,4 @@
 OBJ = main.o mytunes.o mytunesmodel.o UI.o command.o str_util.o song.o recording.o track.o user.o playlist.o manager.o
-
 mytunes: $(OBJ)
 	g++ -o mytunes $(OBJ)
 

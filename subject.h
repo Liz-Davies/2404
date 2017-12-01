@@ -15,7 +15,7 @@ public:
 protected:
   void notify() {
     ArrayList<Observer> observers_copy = observers;
-   for(ArrayList<Observer>::iterator itr = observers_copy.begin(); itr != observers_copy.end(); itr++) {
+    for(ArrayList<Observer>::iterator itr = observers_copy.begin(); itr != observers_copy.end(); itr++) {
       (*itr).update((Subject*) this);
    }
   }

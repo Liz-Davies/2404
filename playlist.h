@@ -26,6 +26,7 @@
 #include "manager.h"
 
 
+
 class Playlist : public Manager, public Subject, public Observer{
 	/*
 	Playlist represents an user playlist of tracks.
