@@ -41,6 +41,7 @@ class Playlist : public Manager, public Subject, public Observer{
 	void addTrack(Track & aTrack);
 	vector<Track*> & getTracks();
     string toString() const;
+	virtual void update(Subject * sub);
 
 	private:
 	string name;

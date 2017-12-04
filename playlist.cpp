@@ -73,6 +73,12 @@ string Playlist::toString()const {
 	return s;
 }
 
+virtual void Playlist::update(Subject * subject){
+	tracks = subject.getTracks();
+}
+virtual void Playlist::printOn(ostream & out)const{
+	out <<aPlaylist.toString()<<endl;
+}
 ostream & operator<<(ostream & out, const Playlist & aPlaylist){
 	out << aPlaylist.toString() << endl;
 	return out;

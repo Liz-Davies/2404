@@ -318,14 +318,14 @@ void MyTunes::executeDeleteSong(Command cmd){
 	view.printOutput("EXECUTING: DELETE SONG " + cmd.getCommandString());
 }
 
-void MYTunes::executeCMDFOLLOW(Command cmd){
+void MyTunes::executeCMDFOLLOW(Command cmd){
 	//follow -u userid -p playlist_name -f userid2
 	//follow -u userid -p -playlist_name -f stop
 	// -f indicates the user that will be followed
 	// -u indicates the user that will DO the following
 	if(!cmd.isValidIndex(cmd.getToken("-u"))) return;
-	User * userFollower = model.getUserByID(cmd.getToken("-u");
-	if(user == NULL) return;
+	User * userFollower = model.getUserByID(cmd.getToken("-u"));
+	if(userFollower == NULL) return;
 
 	if(!cmd.isValidIndex(cmd.getToken("-f"))) return;
 	if(toLowerCase(cmd.getToken("-f")) == "stop") {
