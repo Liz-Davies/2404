@@ -1,3 +1,5 @@
+#ifndef _subjecth
+#define _subjecth
 #include "arraylist.h"
 #include "observer.h"
 class Subject {
@@ -22,3 +24,4 @@ protected:
    }
   }
 };
+#endif

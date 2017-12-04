@@ -1,3 +1,5 @@
+#ifndef _observerh
+#define _observerh
 #include <string.h>
 
 class Subject;
@@ -16,3 +18,4 @@ ostream & operator<<(ostream & out, const Observer & obs) {
  obs.printOn(out);
  return out;
 }
+#endif
