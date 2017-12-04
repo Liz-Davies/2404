@@ -22,9 +22,6 @@
 using namespace std;
 #include "str_util.h"
 #include "mytunes.h"
-#include "UI.h"
-#include "command.h"
-#include "mytunesmodel.h"
 
 MyTunes::MyTunes():view(this)
 {
@@ -351,7 +348,7 @@ void MYTunes::executeCMDFOLLOW(Command cmd){
 			view.printOutput("CREATING AN OBSERVER PLAYLIST " + cmd.getCommandString());
 		}//else if(plObserver.isObserver()) return;
 		//TODO: Rectify this. What do we do if the observer is already observing something?
-		pl.attach(p2);
+		plSubject.attach(plObserver);
 	}
 	view.printOutput("EXECUTING: FOLLOW "+cmd.getCommandString());
 }

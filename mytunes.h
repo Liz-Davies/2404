@@ -25,7 +25,7 @@ using namespace std;
 #include "song.h"
 #include "recording.h"
 #include "track.h"
-//#include "playlist.h"
+#include "playlist.h"
 #include "user.h"
 
 /*
@@ -57,7 +57,7 @@ class MyTunes
     void executeDeleteTrack(Command cmd);
     void executeDeleteSong(Command cmd);
 
-
+    void executeCMDFOLLOW(Command cmd);
 	//Data Model
     MyTunesModel model;
 	//available ID's for app assigned ID's
