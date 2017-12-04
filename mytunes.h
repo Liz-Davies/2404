@@ -27,6 +27,7 @@ using namespace std;
 #include "track.h"
 #include "playlist.h"
 #include "user.h"
+#include "observer.h"
 
 /*
 This is the main application class.

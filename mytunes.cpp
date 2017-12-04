@@ -328,8 +328,8 @@ void MyTunes::executeCMDFOLLOW(Command cmd){
 	if(userFollower == NULL) return;
 
 	if(!cmd.isValidIndex(cmd.getToken("-f"))) return;
-	if(toLowerCase(cmd.getToken("-f")) == "stop") {
-		Playlist * plObserver = userObserver->findPlaylist(cmd.getToken("-p"));
+	if(StrUtil::toLowerCase(cmd.getToken("-f")) == "stop") {
+		Playlist * plObserver = userFollower->findPlaylist(cmd.getToken("-p"));
 		if(plObserver == NULL) return;
 		//TODO: Do we want to have a subject pointer in it? It would make our lives easier? It could be our test for whether certain actions are allowed
 	}else{
@@ -337,18 +337,18 @@ void MyTunes::executeCMDFOLLOW(Command cmd){
 		if(userSubject == NULL) return;
 
 		if(!cmd.isValidIndex(cmd.getToken("-p"))) return;
-		Playlist * plSubject = userSubject->findPlaylist(cmd.getToken("-p");
+		Playlist * plSubject = userSubject->findPlaylist(cmd.getToken("-p"));
 		if(plSubject == NULL) return;
 
-		Playlist * plObserver = userObserver->findPlaylist(cmd.getToken("-p"));
+		Playlist * plObserver = userFollower->findPlaylist(cmd.getToken("-p"));
 		if(plObserver == NULL){
 			plObserver = new Playlist(cmd.getToken("-p"));
 			if(plObserver == NULL) return;
-			userObserver->addPlaylist(*plObserver);
+			userFollower->addPlaylist(*plObserver);
 			view.printOutput("CREATING AN OBSERVER PLAYLIST " + cmd.getCommandString());
 		}//else if(plObserver.isObserver()) return;
 		//TODO: Rectify this. What do we do if the observer is already observing something?
-		plSubject.attach(plObserver);
+		plSubject->attach(*plObserver);
 	}
 	view.printOutput("EXECUTING: FOLLOW "+cmd.getCommandString());
 }
