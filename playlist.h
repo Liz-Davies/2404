@@ -42,6 +42,7 @@ class Playlist : public Manager, public Subject, public Observer{
 	vector<Track*> & getTracks();
     string toString() const;
 	virtual void update(Subject * sub);
+	virtual void printOn(ostream & out);
 
 	private:
 	string name;
