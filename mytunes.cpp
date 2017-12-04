@@ -331,6 +331,8 @@ void MyTunes::executeCMDFOLLOW(Command cmd){
 	if(StrUtil::toLowerCase(cmd.getToken("-f")) == "stop") {
 		Playlist * plObserver = userFollower->findPlaylist(cmd.getToken("-p"));
 		if(plObserver == NULL) return;
+		Subject * sub = plObserver->changeSubject(NULL);
+		sub->dettach(*plObserver);
 		//TODO: Do we want to have a subject pointer in it? It would make our lives easier? It could be our test for whether certain actions are allowed
 	}else{
 		User * userSubject = model.getUserByID(cmd.getToken("-f"));
@@ -347,8 +349,9 @@ void MyTunes::executeCMDFOLLOW(Command cmd){
 			userFollower->addPlaylist(*plObserver);
 			view.printOutput("CREATING AN OBSERVER PLAYLIST " + cmd.getCommandString());
 		}//else if(plObserver.isObserver()) return;
-		//TODO: Rectify this. What do we do if the observer is already observing something?
+		//TODO: Rectify this. What do we do if the observer is already observing something
 		plSubject->attach(*plObserver);
+		plObserver->changeSubject(plSubject);
 	}
 	view.printOutput("EXECUTING: FOLLOW "+cmd.getCommandString());
 }

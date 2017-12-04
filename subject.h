@@ -14,7 +14,7 @@ public:
   void dettach(Observer & obs) {
    observers.remove(obs);
    //cout << "\nDettach: " << " observers size: " << observers.size() << "\n";
-  }
+}
 
 protected:
   void notify() {

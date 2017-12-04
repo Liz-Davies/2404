@@ -43,8 +43,10 @@ class Playlist : public Manager, public Subject, public Observer{
     string toString() const;
 	virtual void update(Subject * sub);
 	virtual void printOn(ostream & out) const;
+	Subject * changeSubject(Subject * sub);
 
 	private:
+	Subject * subject;
 	string name;
 	vector<Track*> tracks;
 	vector<Track*>::iterator findPosition(Track & aTrack);

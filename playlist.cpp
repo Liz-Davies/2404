@@ -73,11 +73,24 @@ string Playlist::toString()const {
 	return s;
 }
 
-virtual void Playlist::update(Subject * subject){
-	tracks = subject.getTracks();
+void Playlist::update(Subject * sub){
+	if(sub == NULL) return;
+	if(sub == subject){
+		Playlist * subb = reinterpret_cast<Playlist*>(sub);
+		tracks = subb->getTracks();
+	}else{
+		sub->dettach(*this);
+		cout << "\nPlaylists cannot follow more than one playlist, please dettach first" <<endl;
+	}
 }
-virtual void Playlist::printOn(ostream & out)const{
-	out <<aPlaylist.toString()<<endl;
+void Playlist::printOn(ostream & out)const{
+	out <<this->toString()<<endl;
+}
+
+Subject * Playlist::changeSubject(Subject * sub){
+	Subject * temp = subject;
+	subject = sub;
+	return temp;
 }
 ostream & operator<<(ostream & out, const Playlist & aPlaylist){
 	out << aPlaylist.toString() << endl;
