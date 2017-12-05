@@ -23,6 +23,7 @@ using namespace std;
 
 Playlist::Playlist(const string & aPlaylistName){
 	cout << "Playlist(string&)" << endl;
+	subject = NULL;
 	name = aPlaylistName;
 }
 Playlist::Playlist(const Playlist & aPlaylist){
@@ -39,24 +40,26 @@ string Playlist::getName(){return name;}
 vector<Track*> & Playlist::getTracks(){return tracks;}
 
 vector<Track*>::iterator Playlist::findPosition(Track & aTrack){
-	std::cout << "Finding Position" << '\n';
 	for (vector<Track*>::iterator itr = tracks.begin() ; itr < tracks.end(); ++itr)
-		if(*itr == &aTrack) return itr;
+		if(*itr == &aTrack)
 	return tracks.end();
 }
 
 void Playlist::addTrack(Track & aTrack){
 	//add track if it does not already exist
+	if(subject!=NULL) return;
 	vector<Track*>::iterator itr = findPosition(aTrack);
-	if(itr == tracks.end()) {
-		tracks.push_back(&aTrack);
-	}
+	tracks.push_back(&aTrack);
+	notify();
+
 }
 
 void Playlist::removeTrack(Track & aTrack){
+	if(subject!=NULL) return;
 	vector<Track*>::iterator itr = findPosition(aTrack);
 	if(itr != tracks.end()) {
 		tracks.erase(itr);
+		notify();
 	}
 }
 
@@ -69,15 +72,15 @@ string Playlist::toString()const {
 	for (vector<Track*>::size_type i = 0 ; i < tracks.size(); i++){
 		   s.append(indent + indent + to_string(i) + " " + (tracks[i])->toString() + "\n");
 	}
-
 	return s;
 }
 
 void Playlist::update(Subject * sub){
 	if(sub == NULL) return;
 	if(sub == subject){
-		Playlist * subb = reinterpret_cast<Playlist*>(sub);
+		Playlist * subb = (Playlist*)sub;
 		tracks = subb->getTracks();
+		notify();
 	}else{
 		sub->dettach(*this);
 		cout << "\nPlaylists cannot follow more than one playlist, please dettach first" <<endl;
@@ -88,6 +91,7 @@ void Playlist::printOn(ostream & out)const{
 }
 
 Subject * Playlist::changeSubject(Subject * sub){
+	if(sub == this) return NULL;
 	Subject * temp = subject;
 	subject = sub;
 	return temp;

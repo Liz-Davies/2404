@@ -29,14 +29,14 @@ add //add data to collections
     //add playlist track
     add -l user_id playlist_name track_id
     add -l gjones "mysongs" 6
-   
+
 delete  //delete data from collections
-    delete -r recording_id //delete recording 
+    delete -r recording_id //delete recording
     delete -u user_id //delete user
     delete -u user_id -p playist//delete user playlist
-    delete -u userID -p playlist -t trackID //del playlist track   
+    delete -u userID -p playlist -t trackID //del playlist track
     //CASCADING DELETES (Use with CAUTION):
-    delete -u userID -p playlist -t trackID -GLOBAL 
+    delete -u userID -p playlist -t trackID -GLOBAL
     delete -t track_id //delete track
     delete -s song_id //delete song
 
@@ -49,21 +49,29 @@ show   //show collections or member of a collection
     show tracks -t track_id
     show users
     show users -u user_id
- 
+
+follow  //Have one user's playlist be a stay-up-to-date copy of another's
+   follow -u userid -p playlist_name -f userid2
+   follow -u userid -p -playlist_name -f stop
+   //-f indicates the user that will be followed
+   //-u indicates the user that will DO the following
+   //if a playlist with the name same name does not exist on
+   //the follower's account, one will be created.
+
 UI SHELL COMMANDS (start with a dot):
 
 .quit   //quit the application
 
 .read   //read a script file
-	.read filename
+    .read filename
 
 .log    //log commands and output
-	.log clear //clear the logs
-	.log start //begin logging commands only
-	.log start_output //begin logging output only
-	.log start_both  //begin logging commands and output
-	.log stop //stop logging
-	.log save filename //save log to filename
+    .log clear //clear the logs
+    .log start //begin logging commands only
+    .log start_output //begin logging output only
+    .log start_both  //begin logging commands and output
+    .log stop //stop logging
+    .log save filename //save log to filename
     .log show //display current log contents on console
 
 .help   //show this help menu
@@ -79,5 +87,3 @@ UI SHELL COMMANDS (start with a dot):
 *   It is not yet built to withstand mal-formed commands or         *
 *   invalid argument values.                                        *
 *********************************************************************
-
-

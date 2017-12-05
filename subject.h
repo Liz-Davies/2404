@@ -7,8 +7,10 @@ class Subject {
  ArrayList<Observer> observers;
 public:
   void attach(Observer & obs) {
-   observers.add(obs);
-  //cout << "\nAttach: " << " observers size: " << observers.size() << "\n";
+      if((void*)(&obs) == (void*)this) return;
+      observers.add(obs);
+      obs.update((Subject*) this);
+      //cout << "\nAttach: " << " observers size: " << observers.size() << "\n";
 
   }
   void dettach(Observer & obs) {

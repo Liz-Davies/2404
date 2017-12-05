@@ -14,8 +14,8 @@ class Observer {
   }
 };
 
-ostream & operator<<(ostream & out, const Observer & obs) {
- obs.printOn(out);
- return out;
-}
+// ostream & operator<<(ostream & out, const Observer & obs) {
+//  obs.printOn(out);
+//  return out;
+//}
 #endif
