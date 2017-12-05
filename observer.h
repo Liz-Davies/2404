@@ -21,10 +21,18 @@
 
 class Subject;
 class Observer {
+  Subject * subject;
   public:
   virtual void update(Subject * subject)= 0;
 
   virtual void printOn(ostream & out) const = 0;
+
+  Subject * changeSubject(Subject * sub){
+  	if(sub == this) return NULL;
+  	Subject * temp = subject;
+  	subject = sub;
+  	return temp;
+  }
 
   int operator==(const Observer & obs) const {
     return this == & obs;
