@@ -33,7 +33,7 @@ Playlist::Playlist(const Playlist & aPlaylist){
 
 Playlist::~Playlist(){
 	cout << "~Playlist(void)" << endl;
-	for(ArrayList<Observer>::iterator itr = observers_copy.begin(); itr != observers_copy.end(); itr++) {
+	for(ArrayList<Observer>::iterator itr = observers.begin(); itr != observers.end(); itr++) {
 		itr->changeSubject(NULL);
 	    observers.remove((*itr));
     }

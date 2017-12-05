@@ -21,6 +21,7 @@
 
 class Subject;
 class Observer {
+  protected:
   Subject * subject;
   public:
   virtual void update(Subject * subject)= 0;
@@ -28,7 +29,7 @@ class Observer {
   virtual void printOn(ostream & out) const = 0;
 
   Subject * changeSubject(Subject * sub){
-  	if(sub == this) return NULL;
+  	if((void*)sub == (void*)this) return NULL;
   	Subject * temp = subject;
   	subject = sub;
   	return temp;

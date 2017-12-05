@@ -20,6 +20,7 @@
 #include "observer.h"
 class Subject {
 //    =======
+protected:
  ArrayList<Observer> observers;
 public:
   void attach(Observer & obs) {
