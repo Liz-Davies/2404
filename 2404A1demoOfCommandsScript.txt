@@ -13,6 +13,17 @@ add -u ajones "Anne Jones"
 add -p ldnel "Driving Songs"
 //add playlist tracks
 add -l ldnel "Driving Songs" 1001
+add -l ldnel "Driving Songs" 1070
+
+//testing follow commands attach update dettach
+add -u liz LIZ
+show users
+follow -u liz -p "Driving Songs" -f ldnel
+add -l ldnel "Driving Songs" 1060
+show users
+follow -u liz -p "Driving Songs" -f stop
+add -l ldnel "Driving Songs" 1064
+show users
 
 //Test delete Commands
 delete -s 1001 -p "Driving Songs" -u ldnel

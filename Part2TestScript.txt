@@ -6,6 +6,7 @@ show users
 add -u ldnel "Louis Nel"
 add -u ldnel "Louis Nel"
 add -u gjones "Glenn Jones"
+add -u standard "Testing"
 show users
 //
 //
@@ -27,12 +28,42 @@ show playlists -u gjones
 add -l ldnel "Driving Songs" 1001
 //add nonexistent track to test searching
 add -l ldnel "Driving Songs" 1
-//add duplicate track to test comparison
+add -l ldnel "Driving Songs" 1070
+add -l ldnel "Driving Songs" 1060
+add -l ldnel "Driving Songs" 1064
+add -l ldnel "Driving Songs" 1055
 add -l ldnel "Driving Songs" 1001
 //
 //
 //show playlist
 show songs -u ldnel -p "Driving Songs"
+//
+//test following
+add -u liz LIZ
+add -p standard "Existing playlist"
+add -l standard "Existing playlist" 1070
+add -l standard "Existing playlist" 1060
+add -p liz "Existing playlist"
+show user -u liz
+show user -u ldnel
+show user -u standard
+follow -u liz -p "Existing playlist" -f standard
+follow -u liz -p "Driving Songs" -f ldnel
+show user liz
+add -l standard "Existing playlist" 1070
+add -l ldnel "Driving Songs" 1055
+show user -u liz
+show user -u ldnel
+show user -u standard
+follow -u liz -p "Existing playlist" -f stop
+follow -u liz -p "Driving Songs" -f stop
+add -l standard "Existing playlist" 1070
+add -l ldnel "Driving Songs" 1055
+show user -u liz
+show user -u ldnel
+show user -u standard
+
+
 delete -Global -s 1001 -p "Driving Songs" -u ldnel
 show songs -u ldnel -p "Driving Songs"
 delete -u ldnel -p "Driving Songs"
