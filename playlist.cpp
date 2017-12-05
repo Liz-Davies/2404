@@ -94,12 +94,6 @@ void Playlist::printOn(ostream & out)const{
 	out <<this->toString()<<endl;
 }
 
-Subject * Playlist::changeSubject(Subject * sub){
-	if(sub == this) return NULL;
-	Subject * temp = subject;
-	subject = sub;
-	return temp;
-}
 ostream & operator<<(ostream & out, const Playlist & aPlaylist){
 	out << aPlaylist.toString() << endl;
 	return out;
