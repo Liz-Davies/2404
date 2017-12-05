@@ -1,3 +1,19 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*                                                   */
+/*  Program:  MyTunes Music Player                   */
+/*  Author:   Louis Nel								 */
+/*			  Sarah Davies  - 100828244				 */
+/*			  Mike Sayegh	- 101029473				 */
+/*  Date:     21-SEP-2017                            */
+/*                                                   */
+/*  (c) 2017 Louis Nel                               */
+/*  All rights reserved.  Distribution and           */
+/*  reposting, in part or in whole, requires         */
+/*  written consent of the author.                   */
+/*                                                   */
+/*  COMP 2404 students may reuse this content for    */
+/*  their course assignments without seeking consent */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * */
 #ifndef _subjecth
 #define _subjecth
 #include "arraylist.h"
@@ -14,6 +30,7 @@ public:
 
   }
   void dettach(Observer & obs) {
+   obs.changeSubject(NULL);
    observers.remove(obs);
    //cout << "\nDettach: " << " observers size: " << observers.size() << "\n";
 }
